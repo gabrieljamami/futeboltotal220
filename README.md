@@ -27,7 +27,7 @@ O **FutebolTotal220** é um projeto que combina Engenharia de Dados e Business I
 
 ---
 
-## 🖼️ Arquitetura do Projeto
+## 🏛️ Arquitetura do Projeto
 
 ![Diagrama de Arquitetura](images/diagrama_arquitetura.png)
 
@@ -54,9 +54,6 @@ Para acionar essas funções Lambda, foi criada uma API no **AWS API Gateway** (
 #### 2️⃣ Armazenamento dos dados raw no S3  
 
 Os dados raw são armazenados no bucket **`futeboltotal220`** do **AWS S3**, garantindo escalabilidade e segurança. Para melhor organização, foi criada uma pasta **`raw`**, contendo as seguintes subpastas: `matches`, `persons`, `scorers` e `teams`. Essas pastas ajudam a categorizar os dados extraídos durante a coleta.
-
-📌 *Estrutura dos arquivos no S3:*  
-![Estrutura do S3](images/s3_structure.png)  
 
 #### 3️⃣ Processamento no Databricks  
 
@@ -88,9 +85,6 @@ Para garantir a escalabilidade e o controle do processamento dos dados, especial
 Os dados processed são armazenados no bucket **`futeboltotal220`** do **AWS S3**, garantindo escalabilidade e segurança. Para melhor organização, foi criada uma pasta **`processed`**, contendo as seguintes subpastas: `matches`, `persons`, `scorers`, `season_team_player`, `season` e `teams`. Essas pastas ajudam a categorizar os dados extraídos durante a coleta.
 
 Os arquivos csv para carregar no Power BI ficam na pasta `pbi`
-
-📌 *Estrutura dos arquivos no S3:*  
-![Estrutura do S3](images/s3_structure.png)  
 
 #### 5️⃣ Criação do Dashboard  
 
