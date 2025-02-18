@@ -6,7 +6,14 @@ O **FutebolTotal220** é um projeto que combina Engenharia de Dados e Business I
 
 ---
 
-## 🛠️ Tecnologias, Linguagens e Ferramentas
+## 🛠️ Metodologias, Linguagens e Ferramentas
+
+- **Metodologias**:  
+  - **ETL (Extract, Transform, Load)**  
+  - **Modelo de dados Snowflake** no Power BI  
+  - **Processamento em Batches** para controlar e processar dados em pequenas porções, garantindo otimização de recursos  
+  - **Data Lake** usando o AWS S3 para armazenar dados brutos extraídos pela API, garantindo um ambiente escalável e flexível  
+  - **Data Warehousing** organizando dados em tabelas estruturadas, formando um data warehouse pronto para análise.
 
 - **Linguagens**:  
   - **Python** (para funções no AWS Lambda e processamento no Databricks)
@@ -17,13 +24,6 @@ O **FutebolTotal220** é um projeto que combina Engenharia de Dados e Business I
   - **AWS API Gateway**, **AWS Lambda**, **AWS S3**, **AWS IAM**, **AWS CloudWatch**, **AWS SQS**  
   - **Databricks** (para pipeline de ETL com **PySpark**)
   - **Power BI** (para visualização e criação de dashboard)
-
-- **Metodologias**:  
-  - **ETL (Extract, Transform, Load)**  
-  - **Modelo de dados Snowflake** no Power BI  
-  - **Processamento em Batches** para controlar e processar dados em pequenas porções, garantindo otimização de recursos  
-  - **Data Lake** usando o AWS S3 para armazenar dados brutos extraídos pela API, garantindo um ambiente escalável e flexível  
-  - **Data Warehousing** organizando dados em tabelas estruturadas, formando um data warehouse pronto para análise.
 
 ---
 
@@ -75,6 +75,7 @@ São **11 notebooks**, localizados em `/databricks`, responsáveis pela extraç�
 | **09_jb_pl_scorers_lambda_raw.dbc**               | Extrai dados de artilheiros via API.                                                                                                          |
 | **10_jb_pl_scorers_transform.dbc**                | Processa dados de artilheiros e grava no S3, criando a tabela **Delta**.                                                                      |
 | **11_jb_pl_export_all_dbfs.dbc**                  | Exporta as tabelas **Delta** para arquivos **CSV** no S3, prontos para Power BI.                                                              |
+
 Para garantir a escalabilidade e o controle do processamento dos dados, especialmente no caso de grandes volumes de dados, o processamento é feito em batches. O AWS SQS é utilizado para gerenciar a fila de execução dos batches, permitindo o processamento controlado de pequenas porções de dados, evitando sobrecarga e otimizando o uso de recursos. O Lambda processa um batch por vez, respeitando o limite da API.
 
 📌 *Pipeline de ETL no Databricks:*  
