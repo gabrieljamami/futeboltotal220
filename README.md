@@ -1,6 +1,6 @@
 # ⚽ FutebolTotal220 - Pipeline de Dados da Premier League  
 
-## Descrição
+**Acesse o Dashboard**: [Link para o Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZTQwZTY4YjItNmM4YS00ZTg2LWI1ZTQtYjYxMzEzNjI1MjZjIiwidCI6ImZiYmE0ZjhmLWYzNmUtNDUzNC04ZWZiLThhOWU1ODU4YTk4ZSJ9)  
 
 O **FutebolTotal220** é um projeto que combina Engenharia de Dados e Business Intelligence para processar, analisar e visualizar dados de futebol. Utilizando diversas ferramentas do AWS, Databricks e Power BI, o projeto automatiza a coleta e o tratamento de dados, transformando-os em insights sobre a Premier League (Campeonato Inglês de Futebol).
 
@@ -27,6 +27,12 @@ O **FutebolTotal220** é um projeto que combina Engenharia de Dados e Business I
 
 ---
 
+## 🖼️ Arquitetura do Projeto
+
+![Diagrama de Arquitetura](images/diagrama_arquitetura.png)
+
+---
+
 ## 📝 Passo a passo do projeto
 
 #### 1️⃣ Coleta de Dados  
@@ -45,16 +51,12 @@ Para acionar essas funções Lambda, foi criada uma API no **AWS API Gateway** (
 📌 *Exemplo de JSON retornado pela API:*  
 ![Exemplo de JSON](images/api_response.png)  
 
----
-
 #### 2️⃣ Armazenamento dos dados raw no S3  
 
 Os dados raw são armazenados no bucket **`futeboltotal220`** do **AWS S3**, garantindo escalabilidade e segurança. Para melhor organização, foi criada uma pasta **`raw`**, contendo as seguintes subpastas: `matches`, `persons`, `scorers` e `teams`. Essas pastas ajudam a categorizar os dados extraídos durante a coleta.
 
 📌 *Estrutura dos arquivos no S3:*  
 ![Estrutura do S3](images/s3_structure.png)  
-
----
 
 #### 3️⃣ Processamento no Databricks  
 
@@ -81,8 +83,6 @@ Para garantir a escalabilidade e o controle do processamento dos dados, especial
 📌 *Pipeline de ETL no Databricks:*  
 ![Pipeline ETL](images/databricks_pipeline.png)
 
----
-
 #### 4️⃣ Armazenamento dos dados processed no S3  
 
 Os dados processed são armazenados no bucket **`futeboltotal220`** do **AWS S3**, garantindo escalabilidade e segurança. Para melhor organização, foi criada uma pasta **`processed`**, contendo as seguintes subpastas: `matches`, `persons`, `scorers`, `season_team_player`, `season` e `teams`. Essas pastas ajudam a categorizar os dados extraídos durante a coleta.
@@ -91,8 +91,6 @@ Os arquivos csv para carregar no Power BI ficam na pasta `pbi`
 
 📌 *Estrutura dos arquivos no S3:*  
 ![Estrutura do S3](images/s3_structure.png)  
-
----
 
 #### 5️⃣ Criação do Dashboard  
 
