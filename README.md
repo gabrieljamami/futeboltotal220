@@ -21,7 +21,7 @@ O **FutebolTotal220** é um projeto que combina Engenharia de Dados e Business I
   - **PySpark** (para processamento distribuído no Databricks)
 
 - **Ferramentas**:  
-  - **AWS API Gateway**, **AWS Lambda**, **AWS S3**, **AWS IAM**, **AWS CloudWatch**, **AWS SQS**  
+  - **AWS API Gateway**, **AWS Lambda**, **AWS S3**, **AWS SQS**, **AWS CloudWatch** e **AWS IAM**
   - **Databricks** (para pipeline de ETL com **PySpark**)
   - **Power BI** (para visualização e criação de dashboard)
 
