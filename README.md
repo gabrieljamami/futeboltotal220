@@ -1,150 +1,131 @@
-# ⚽ FutebolTotal220 - Pipeline de Dados da Premier League  
+# ⚽ FutebolTotal220 - Premier League Data Pipeline  
 
-**Acesse o Dashboard**: [Link para o Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZTQwZTY4YjItNmM4YS00ZTg2LWI1ZTQtYjYxMzEzNjI1MjZjIiwidCI6ImZiYmE0ZjhmLWYzNmUtNDUzNC04ZWZiLThhOWU1ODU4YTk4ZSJ9)  
+**Access the Dashboard**: [Dashboard Link](https://app.powerbi.com/view?r=eyJrIjoiZTQwZTY4YjItNmM4YS00ZTg2LWI1ZTQtYjYxMzEzNjI1MjZjIiwidCI6ImZiYmE0ZjhmLWYzNmUtNDUzNC04ZWZiLThhOWU1ODU4YTk4ZSJ9)  
 
-O **FutebolTotal220** é um projeto que combina Engenharia de Dados e Business Intelligence para processar, analisar e visualizar dados de futebol. Utilizando diversas ferramentas do AWS, Databricks e Power BI, o projeto automatiza a coleta e o tratamento de dados, transformando-os em insights sobre a Premier League (Campeonato Inglês de Futebol).
+**FutebolTotal220** is a project that combines Data Engineering and Business Intelligence to process, analyze, and visualize football data. Using various AWS tools, Databricks, and Power BI, the project automates data collection and processing, transforming them into insights about the Premier League (English Football Championship).
 
 ---
 
-## 🛠️ Metodologias, Linguagens e Ferramentas
+## 🛠️ Methodologies, Languages, and Tools
 
-- **Metodologias**:  
+- **Methodologies**:  
   - **ETL (Extract, Transform, Load)**  
-  - **Modelo de dados Snowflake** no Power BI  
-  - **Processamento em Batches** para controlar e processar dados em pequenas porções, garantindo otimização de recursos  
-  - **Data Lake** usando o AWS S3 para armazenar dados brutos extraídos pela API, garantindo um ambiente escalável e flexível  
-  - **Data Warehousing** organizando dados em tabelas estruturadas, formando um data warehouse pronto para análise.
+  - **Snowflake Data Model** in Power BI  
+  - **Batch Processing** to control and process data in small portions, ensuring resource optimization  
+  - **Data Lake** using AWS S3 to store raw data extracted by the API, providing a scalable and flexible environment  
+  - **Data Warehouse** organizing data into structured tables, creating a warehouse ready for analysis.
 
-- **Linguagens**:  
-  - **Python** (para funções no AWS Lambda e processamento no Databricks)
-  - **SQL** (para consultas e manipulação de dados no Databricks)
-  - **PySpark** (para processamento distribuído no Databricks)
+- **Languages**:  
+  - **Python** (for AWS Lambda functions and processing in Databricks)
+  - **SQL** (for queries and data manipulation in Databricks)
+  - **PySpark** (for distributed processing in Databricks)
 
-- **Ferramentas**:  
-  - **AWS API Gateway**, **AWS Lambda**, **AWS S3**, **AWS SQS**, **AWS CloudWatch** e **AWS IAM**
-  - **Databricks** (para pipeline de ETL com **PySpark**)
-  - **Power BI** (para visualização e criação de dashboard)
-
----
-
-## 🏛️ Arquitetura do Projeto
-
-![Diagrama de Arquitetura](images/diagrama_arquitetura.png)
+- **Tools**:  
+  - **AWS API Gateway**, **AWS Lambda**, **AWS S3**, **AWS SQS**, **AWS CloudWatch**, and **AWS IAM**
+  - **Databricks** (for ETL pipeline with **PySpark**)
+  - **Power BI** (for visualization and dashboard creation)
 
 ---
 
-## 📝 Passo a passo do projeto
+## 🏛️ Project Architecture
 
-#### 1️⃣ Coleta de Dados  
+![Architecture Diagram](images/architecture_diagram.png)
 
-A API **[Football-Data.org](https://www.football-data.org/)** foi utilizada para coletar dados sobre as partidas, equipes, elencos e estatísticas da **Premier League**. Para realizar a extração dessas informações, foram desenvolvidas funções específicas no **AWS Lambda**, localizadas na pasta `/lambda_function` do repositório.  
+---
 
-Os principais arquivos envolvidos são:
-- **matches**: Dados sobre as partidas realizadas.
-- **scorers**: Informações sobre os maiores artilheiros do campeonato.
-- **teams**: Dados das equipes, jogadores e técnicos.
+## 📝 Project Steps
 
-Esses dados abrangem as temporadas de **2022/2023**, **2023/2024** e **2024/2025**.
+#### 1️⃣ Data Collection  
 
-Para acionar essas funções Lambda, foi criada uma API no **AWS API Gateway** (configuração no arquivo `swagger.json`, localizado na pasta `/api_gateway`)
+The **[Football-Data.org](https://www.football-data.org/)** API was used to collect data on matches, teams, squads, and statistics from the **Premier League**. To extract this information, specific functions were developed in **AWS Lambda**, located in the `/lambda_function` directory.
 
-📌 *Exemplo de JSON retornado pela API:*  
-![Exemplo de JSON](images/api_response.png)  
+The main files involved are:
+- **matches**: Data about played matches.
+- **scorers**: Information about the league's top scorers.
+- **teams**: Data on teams, players, and coaches.
 
-#### 2️⃣ Armazenamento dos dados raw no S3  
+These data cover the **2022/2023**, **2023/2024**, and **2024/2025** seasons.
 
-Os dados raw são armazenados no bucket **`futeboltotal220`** do **AWS S3**, garantindo escalabilidade e segurança. Para melhor organização, foi criada uma pasta **`raw`**, contendo as seguintes subpastas: `matches`, `persons`, `scorers` e `teams`. Essas pastas ajudam a categorizar os dados extraídos durante a coleta.
+To trigger these Lambda functions, an API was created in **AWS API Gateway** (configuration in `swagger.json` file, located in `/api_gateway`)
 
-#### 3️⃣ Processamento no Databricks  
+📌 *Example of JSON returned by the API:*  
+![JSON Example](images/api_response.png)  
 
-Os dados são processados em um pipeline **ETL (Extract, Transform, Load)** dentro do **Databricks**, onde são limpos, transformados e organizados.
+#### 2️⃣ Storing Raw Data in S3  
 
-São **11 notebooks**, localizados em `/databricks`, responsáveis pela extração e tratamento dos dados antes de enviá-los ao **Power BI**:
+Raw data is stored in the **`futeboltotal220`** bucket in **AWS S3**, ensuring scalability and security. To maintain organization, a **`raw`** folder was created, containing subfolders: `matches`, `persons`, `scorers`, and `teams`. These folders help categorize extracted data.
 
-| **Notebooks**                                     | **Descrição**                                                                                                                                  |
-|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| **01_jb_pl_teams_lambda_raw.dbc**                 | Extrai dados de equipes, temporadas, jogadores e técnicos via API.                                                                            |
-| **02_jb_pl_teams_transform.dbc**                  | Processa dados de equipes e grava no S3, criando a tabela **Delta**.                                                                          |
-| **03_jb_pl_season_transform.dbc**                 | Processa dados de temporadas e grava no S3, criando a tabela **Delta**.                                                                       |
-| **04_jb_pl_season_teams_persons_transform.dbc**    | Relaciona jogadores e técnicos a times e temporadas, criando a tabela **Delta**.                                                              |
-| **05_jb_pl_persons_raw.dbc** *(destaque)*          | **Processo**: <br>1. Lê arquivo JSON de pessoas no S3. <br>2. Processa IDs não enviados. <br>3. Organiza em batches de 10 e salva no S3. <br>4. Envia um batch por vez para o **SQS** e aguarda 1 minuto antes do próximo. <br>**SQS e Lambda**: Processa um batch por vez, respeitando o limite da API. |
-| **06_jb_pl_persons_transform.dbc**                | Processa dados de pessoas e grava no S3, criando a tabela **Delta**.                                                                          |
-| **07_jb_pl_matches_lambda_raw.dbc**               | Extrai dados de partidas via API.                                                                                                             |
-| **08_jb_pl_matches_transform.dbc**                | Processa dados de partidas e grava no S3, criando a tabela **Delta**.                                                                         |
-| **09_jb_pl_scorers_lambda_raw.dbc**               | Extrai dados de artilheiros via API.                                                                                                          |
-| **10_jb_pl_scorers_transform.dbc**                | Processa dados de artilheiros e grava no S3, criando a tabela **Delta**.                                                                      |
-| **11_jb_pl_export_all_dbfs.dbc**                  | Exporta as tabelas **Delta** para arquivos **CSV** no S3, prontos para Power BI.                                                              |
+#### 3️⃣ Processing in Databricks  
 
-Para garantir a escalabilidade e o controle do processamento dos dados, especialmente no caso de grandes volumes de dados, o processamento é feito em batches. O AWS SQS é utilizado para gerenciar a fila de execução dos batches, permitindo o processamento controlado de pequenas porções de dados, evitando sobrecarga e otimizando o uso de recursos. O Lambda processa um batch por vez, respeitando o limite da API.
+The data is processed in an **ETL (Extract, Transform, Load)** pipeline within **Databricks**, where it is cleaned, transformed, and organized.
 
-📌 *Pipeline de ETL no Databricks:*  
-![Pipeline ETL](images/databricks_pipeline.png)
+There are **11 notebooks**, located in `/databricks`, responsible for extracting and processing data before sending it to **Power BI**:
 
-#### 4️⃣ Armazenamento dos dados processed no S3  
+📌 *ETL Pipeline in Databricks:*  
+![ETL Pipeline](images/databricks_pipeline.png)
 
-Os dados processed são armazenados no bucket **`futeboltotal220`** do **AWS S3**, garantindo escalabilidade e segurança. Para melhor organização, foi criada uma pasta **`processed`**, contendo as seguintes subpastas: `matches`, `persons`, `scorers`, `season_team_player`, `season` e `teams`. Essas pastas ajudam a categorizar os dados extraídos durante a coleta.
+#### 4️⃣ Storing Processed Data in S3  
 
-Os arquivos csv para carregar no Power BI ficam na pasta `pbi`
+Processed data is stored in the **`futeboltotal220`** bucket in **AWS S3**, ensuring scalability and security. To maintain organization, a **`processed`** folder was created, containing subfolders: `matches`, `persons`, `scorers`, `season_team_player`, `season`, and `teams`.
 
-#### 5️⃣ Criação do Dashboard  
+CSV files for loading into Power BI are in the `pbi` folder.
 
-**Acesse o Dashboard**: [Link para o Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZTQwZTY4YjItNmM4YS00ZTg2LWI1ZTQtYjYxMzEzNjI1MjZjIiwidCI6ImZiYmE0ZjhmLWYzNmUtNDUzNC04ZWZiLThhOWU1ODU4YTk4ZSJ9)  
+#### 5️⃣ Creating the Dashboard  
 
-Após o processamento, os dados são carregados no **Power BI**, utilizando um modelo **Snowflake**. Esse modelo foi necessário porque uma equipe possui vários jogadores, e os elencos mudam a cada temporada.  
+**Access the Dashboard**: [Dashboard Link](https://app.powerbi.com/view?r=eyJrIjoiZTQwZTY4YjItNmM4YS00ZTg2LWI1ZTQtYjYxMzEzNjI1MjZjIiwidCI6ImZiYmE0ZjhmLWYzNmUtNDUzNC04ZWZiLThhOWU1ODU4YTk4ZSJ9)  
 
-Além das tabelas criadas a partir dos arquivos CSV, foram geradas mais 3 dimensões:  
+After processing, the data is loaded into **Power BI**, using a **Snowflake model**. This model was necessary because a team has multiple players, and squads change each season.
 
-- **d_season_team**: Contém apenas uma coluna (`season_team_id`) e funciona como uma **bridge table** para evitar relações de muitos para muitos.  
-- **d_coaches**: Criada a partir do arquivo `tb_persons.csv`, armazena os técnicos.  
-- **d_players**: Também criada a partir do arquivo `tb_persons.csv`, armazena os jogadores.  
+Additionally, three extra dimensions were created:
 
-📌 *Modelo Snowflake aplicado no Dashboard:*  
-![Dashboard Modelo](images/dashboard_modelo.png)  
+- **d_season_team**: Contains only one column (`season_team_id`) and acts as a **bridge table** to avoid many-to-many relationships.
+- **d_coaches**: Created from the `tb_persons.csv` file, storing coaches.
+- **d_players**: Also created from the `tb_persons.csv` file, storing players.
 
-A partir dessa estrutura, o dashboard foi desenvolvido com os dados da **Premier League**, dividido em **3 abas** principais:  
+📌 *Snowflake Model in the Dashboard:*  
+![Dashboard Model](images/dashboard_model.png)  
+
+The dashboard was developed with **Premier League** data and is divided into **3 main tabs**:
 
 #### 📊 *League Table*  
-Exibe a tabela de classificação da Premier League com a posição de cada clube, quantidade de pontos e outras estatísticas detalhadas.  
+Displays the Premier League standings, showing each club's position, points, and other detailed statistics.
 
-Também apresenta destaques como:  
-- **Técnico campeão** da temporada.  
-- **Artilheiro** da liga.  
-- **Jogador com mais assistências**.  
+Also highlights:
+- **Champion coach** of the season.
+- **League top scorer**.
+- **Player with the most assists**.
 
-O usuário pode aplicar **filtros** para visualizar dados das últimas **3 temporadas**.  
+Users can apply **filters** to view data from the last **3 seasons**.
 
-📌 *Aba League Table:*  
+📌 *League Table Tab:*  
 ![Dashboard League Table](images/dashboard_league_table.png)  
 
 #### ⚽ *Matches*  
-Apresenta todas as partidas da Premier League com os respectivos resultados.  
+Shows all Premier League matches with respective results.
 
-📌 *Aba Matches:*  
+📌 *Matches Tab:*  
 ![Dashboard Matches](images/dashboard_matches.png)  
 
 #### 📈 *Statistics*  
-Exibe estatísticas detalhadas de cada temporada, incluindo:  
-- Média de **gols por jogo**.  
-- Percentual de **vitórias em casa** e **fora de casa**.  
-- Jogos com **3 gols ou mais**.  
-- Partida com **mais gols** na temporada.  
-- Lista dos **artilheiros** e dos jogadores com mais **participações em gols**.  
+Displays detailed statistics for each season, including:
+- **Average goals per match**.
+- **Percentage of home and away wins**.
+- **Games with 3 or more goals**.
+- **Match with the most goals in the season**.
+- **List of top scorers and players with most goal contributions**.
 
-📌 *Aba Statistics:*  
+📌 *Statistics Tab:*  
 ![Dashboard Statistics](images/dashboard_statistics.png)  
 
 ---
 
-## Estrutura do repositório
+## Repository Structure
 
 /FutebolTotal220
 
 │── /api_gateway        
 │── /lambda_function    
-│── /databricks    
-│── /sqs                   
-│── /s3                 
+│── /databricks           
 │── /powerbi            
 │── /images            
-│── README.md           
-│── requirements.txt    
+│── README.md
