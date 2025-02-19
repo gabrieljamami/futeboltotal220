@@ -138,6 +138,7 @@ Exibe estatísticas detalhadas de cada temporada, incluindo:
 ## Estrutura do repositório
 
 /FutebolTotal220
+
 │── /api_gateway        
 │── /lambda_function    
 │── /databricks    
