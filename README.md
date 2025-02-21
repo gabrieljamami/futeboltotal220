@@ -29,7 +29,7 @@
 
 ## 🏛️ Project Architecture
 
-![Architecture Diagram](images/architecture_diagram.png)
+![Architecture Diagram](images/diagrama_arquitetura.png)
 
 ---
 
@@ -83,7 +83,7 @@ Additionally, three extra dimensions were created:
 - **d_players**: Also created from the `tb_persons.csv` file, storing players.
 
 📌 *Snowflake Model in the Dashboard:*  
-![Dashboard Model](images/dashboard_model.png)  
+![Dashboard Model](images/dashboard_modelo.png)  
 
 The dashboard was developed with **Premier League** data and is divided into **3 main tabs**:
 
